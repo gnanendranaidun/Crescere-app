@@ -73,11 +73,12 @@ class _CameraScreenState extends State<CameraScreen> {
         final user = FirebaseAuth.instance.currentUser;
         if (user != null) {
           final databaseRef = FirebaseDatabase.instance.ref();
+          final volunteerId = user.displayName ?? 'Unknown';
           final childRef = databaseRef
               .child('Crescere')
-              .child(user.displayName ?? 'Unknown')
-              .child(widget.childData['set']!)
-              .child('child_id:${widget.childData['id']}');
+              .child('Volunteer_${volunteerId}')
+              .child('set_${widget.childData['set']}')
+              .child('child_id_${widget.childData['id']}');
 
           await childRef.set({
             'Name': widget.childData['name'],
@@ -191,4 +192,4 @@ class _CameraScreenState extends State<CameraScreen> {
       ),
     );
   }
-} 
+}
